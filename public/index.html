@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Vault</title>
+    <style>
+        body { 
+            background: #0f172a; 
+            color: #f8fafc; 
+            font-family: 'Inter', system-ui, sans-serif;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        .card { 
+            background: #1e293b; 
+            padding: 2.5rem; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
+            width: 90%; /* Ajuste dinámico */
+            max-width: 380px; 
+            box-sizing: border-box;
+        }
+        h3 { margin-top: 0; color: #38bdf8; text-align: center; }
+        input { 
+            width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #334155; 
+            background: #0f172a; color: white; border-radius: 8px; box-sizing: border-box;
+            font-size: 16px; /* Evita zoom automático en iOS */
+        }
+        button { 
+            width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; 
+            border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        button:hover { background: #7dd3fc; }
+        #resultado { margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center; font-size: 0.9rem; }
+        
+        .weak { border: 1px solid #ef4444; color: #fca5a5; }
+        .medium { border: 1px solid #f59e0b; color: #fcd34d; }
+        .strong { border: 1px solid #22c55e; color: #86efac; }
+
+        /* Ajustes específicos para móviles */
+        @media (max-width: 480px) {
+            .card { border-radius: 12px; padding: 1.5rem; }
+            input, button { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div class="card">
+    <h3>Password Vault</h3>
+    <input type="password" id="pass" placeholder="Enter your password">
+    <button onclick="analyze()">Check Strength</button>
+    <div id="resultado" style="display:none;"></div>
+</div>
+
+<script>
+async function analyze() {
+    const password = document.getElementById('pass').value;
+    const res = await fetch('/analyze', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({password: password})
+    });
+    const data = await res.json();
+    
+    const div = document.getElementById('resultado');
+    div.style.display = 'block';
+    div.className = data.strength;
+    div.innerHTML = `<strong>${data.strength.toUpperCase()}</strong> (Score: ${data.score})<br>`;
+    
+    if (data.missing.length > 0) {
+        div.innerHTML += `<small style="opacity: 0.8;">Missing: ${data.missing.join(', ')}</small>`;
+    }
+}
+</script>
+</body>
+</html>
