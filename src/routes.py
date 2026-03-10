@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from .analyzer import password_analyzer  
+from analyzer import password_analyzer  
 
 api = Blueprint('api', __name__)
 
