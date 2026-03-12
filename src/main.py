@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory
-from routes import api 
+from src.routes import api 
 
 app = Flask(__name__, static_folder='public')
 
