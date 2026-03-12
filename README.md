@@ -25,12 +25,12 @@ Check it live here: [Password Analyzer](https://secure-password-analyzer-web-too
 
 password-analyzer/
 ├ src/
-│ ├ main.py # Flask app
-│ ├ routes.py # API routes for password analysis
-│ ├ analyzer.py # Password analysis logic
+│ ├ main.py 
+│ ├ routes.py 
+│ ├ analyzer.py 
 │ └ public/
-│ └ index.html # Frontend
-└ requirements.txt # Dependencies
+│ └ index.html 
+└ requirements.txt
 
 
 ---
