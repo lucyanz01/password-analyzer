@@ -32,8 +32,7 @@ password-analyzer/
 │ └ public/
 │ └ index.html 
 └ requirements.txt
-
-
+```
 ---
 
 ## Deployment 
